@@ -3,6 +3,12 @@ language: java
 jdk:
   - openjdk14
 
+services:
+  - postgresql
+
+before_install:
+  - psql -c 'create database rabbit;' -U postgres
+
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
 
@@ -21,3 +27,4 @@ notifications:
 
 env:
   global:
+     - CODECOV_TOKEN="0ab5423e-a64e-4632-b54a-c82e756a3b80"
