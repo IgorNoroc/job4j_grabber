@@ -12,6 +12,8 @@ import java.util.List;
  * 2. Парсинг HTML страницы. [#279183]
  */
 public class SqlRuParse {
+    private final static int DATE_POSITION = 5;
+
     public static void main(String[] args) {
         try {
             Document doc = Jsoup.connect("https://www.sql.ru/forum/job-offers").get();
@@ -51,10 +53,9 @@ public class SqlRuParse {
      */
     private static List<String> getDates(Document document) {
         List<String> rsl = new ArrayList<>();
-        Elements elements = document.select(".altCol");
+        Elements elements = document.getElementsByClass("forumTable").get(0).getElementsByTag("tr");
         for (int i = 1; i < elements.size(); i++) {
-            rsl.add(elements.get(i).text());
-            i++;
+            rsl.add(elements.get(i).getElementsByTag("td").get(DATE_POSITION).text());
         }
         return rsl;
     }
